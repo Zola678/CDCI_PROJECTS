@@ -1,86 +1,71 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Open Box</title>
+@extends('layouts.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('content')
 
-<body class="bg-light">
+<div class="container py-4" style="max-width: 600px;">
 
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <!-- TÍTULO -->
+    <h2 class="fw-bold mb-4">
+        Login - Open Box
+    </h2>
 
-    <div class="card shadow p-4" style="width: 420px;">
+    <!-- STATUS -->
+    @if(session('status'))
+        <div class="alert alert-info">
+            {{ session('status') }}
+        </div>
+    @endif
 
-        <h3 class="text-center mb-4">
-            Open Box Login
-        </h3>
+    <!-- ERROS -->
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-        <!-- STATUS -->
-        @if(session('status'))
-            <div class="alert alert-info">
-                {{ session('status') }}
-            </div>
-        @endif
+    <!-- FORM -->
+    <form method="POST" action="{{ route('loogin.store') }}">
 
-        <!-- ERROS -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        @csrf
 
-        <!-- FORM -->
-        <form method="POST" action="{{ route('loogin.store') }}">
-            @csrf
+        <div class="mb-3">
+            <input type="email"
+                   name="email"
+                   value="{{ old('email') }}"
+                   class="form-control"
+                   placeholder="Email"
+                   required
+                   autofocus>
+        </div>
 
-            <!-- EMAIL -->
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email"
-                       name="email"
-                       value="{{ old('email') }}"
-                       class="form-control"
-                       required
-                       autofocus>
-            </div>
+        <div class="mb-3">
+            <input type="password"
+                   name="password"
+                   class="form-control"
+                   placeholder="Password"
+                   required>
+        </div>
 
-            <!-- PASSWORD -->
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password"
-                       name="password"
-                       class="form-control"
-                       required>
-            </div>
+        <div class="form-check mb-3">
+            <input type="checkbox"
+                   name="remember"
+                   class="form-check-input"
+                   id="remember">
+            <label class="form-check-label" for="remember">
+                Remember me
+            </label>
+        </div>
 
-            <!-- REMEMBER -->
-            <div class="form-check mb-3">
-                <input type="checkbox"
-                       name="remember"
-                       class="form-check-input"
-                       id="remember">
-                <label class="form-check-label" for="remember">
-                    Remember me
-                </label>
-            </div>
+        <button type="submit" class="btn btn-primary w-100">
+            Log in
+        </button>
 
-            <!-- BOTÃO -->
-            <button type="submit" class="btn btn-primary w-100">
-                Log in
-            </button>
-
-        </form>
-
-    </div>
+    </form>
 
 </div>
 
-</body>
-</html>
+@endsection
