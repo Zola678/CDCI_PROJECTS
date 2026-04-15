@@ -1,69 +1,59 @@
-<x-app-layout>
+@extends('layouts.app')
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Open Box Corporation - Serviços
-        </h2>
-    </x-slot>
+@section('content')
 
-    <div class="py-12 bg-gray-100 min-h-screen">
+<div class="container py-4">
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h1 class="fw-bold">Nossos Serviços</h1>
+        <p class="text-muted">Escolha um serviço e envie sua solicitação</p>
+    </div>
 
-            {{-- HEADER --}}
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-800">
-                    Nossos Serviços
-                </h1>
-                <p class="text-gray-600">
-                    Escolha um serviço e envie sua solicitação
-                </p>
-            </div>
+    <!-- GRID -->
+    <div class="row g-4">
 
-            {{-- GRID DE SERVIÇOS --}}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @forelse($services as $service)
 
-                @forelse($services as $service)
+            <div class="col-md-4">
 
-                    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <div class="card shadow-sm h-100">
 
-                        <h3 class="text-lg font-bold text-gray-900">
+                    <div class="card-body">
+
+                        <h5 class="card-title fw-bold">
                             {{ $service->name }}
-                        </h3>
+                        </h5>
 
-                        <p class="text-gray-600 mt-2">
+                        <p class="card-text text-muted">
                             {{ $service->description }}
                         </p>
 
-                        {{-- FORM SOLICITAÇÃO --}}
-                        <form method="POST"
-                              action="{{ route('request.service', $service->id) }}"
-                              class="mt-4">
-
+                        <!-- FORM -->
+                        <form method="POST" action="{{ route('request.service', $service->id) }}">
                             @csrf
 
-                            <button type="submit"
-                                class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-
+                            <button type="submit" class="btn btn-primary w-100">
                                 + Solicitar Serviço
-
                             </button>
-
                         </form>
 
                     </div>
 
-                @empty
-
-                    <div class="col-span-3 text-center text-gray-500">
-                        Nenhum serviço disponível no momento.
-                    </div>
-
-                @endforelse
+                </div>
 
             </div>
 
-        </div>
+        @empty
+
+            <div class="col-12 text-center text-muted">
+                Nenhum serviço disponível no momento.
+            </div>
+
+        @endforelse
+
     </div>
 
-</x-app-layout>
+</div>
+
+@endsection

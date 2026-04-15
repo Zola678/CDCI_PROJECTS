@@ -8,6 +8,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\RequestServiceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\LooginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,16 @@ use App\Http\Controllers\ProfileController;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+/*
+|--------------------------------------------------------------------------
+| LOGIN CUSTOM (LOOGIN)
+|--------------------------------------------------------------------------
+*/
+Route::get('/loogin', [LooginController::class, 'create'])->name('loogin');
+Route::post('/loogin', [LooginController::class, 'store'])->name('loogin.store');
+Route::post('/logout', [LooginController::class, 'destroy'])->name('logout');
 
 
 /*
@@ -36,30 +47,15 @@ Route::post('/register-client', [ClientController::class, 'store'])
 */
 Route::middleware(['auth'])->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD CLIENTE
-    |--------------------------------------------------------------------------
-    */
     Route::get('/dashboard', [ServiceController::class, 'index'])
         ->name('dashboard');
 
-    /*
-    |--------------------------------------------------------------------------
-    | PEDIDOS DE SERVIÇO
-    |--------------------------------------------------------------------------
-    */
     Route::post('/request-service/{id}', [RequestServiceController::class, 'store'])
         ->name('request.service');
 
     Route::get('/my-requests', [RequestServiceController::class, 'index'])
         ->name('requests.index');
 
-    /*
-    |--------------------------------------------------------------------------
-    | PROFILE (BREEZE)
-    |--------------------------------------------------------------------------
-    */
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -68,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| ADMIN AREA (PROTEGIDA)
+| ADMIN AREA
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -77,11 +73,3 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin');
 
 });
-
-
-/*
-|--------------------------------------------------------------------------
-| AUTH (BREEZE)
-|--------------------------------------------------------------------------
-*/
-require __DIR__.'/auth.php';

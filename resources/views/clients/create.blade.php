@@ -1,74 +1,86 @@
-<x-app-layout>
+@extends('layouts.app')
 
-    <div class="max-w-2xl mx-auto p-6">
+@section('content')
 
-        <h2 class="text-2xl font-bold mb-6">
-            Cadastro de Cliente
-        </h2>
+<div class="container py-4" style="max-width: 600px;">
 
-        {{-- SUCESSO --}}
-        @if(session('success'))
-            <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
-                {{ session('success') }}
-            </div>
-        @endif
+    <!-- TÍTULO -->
+    <h2 class="fw-bold mb-4">
+        Cadastro de Cliente
+    </h2>
 
-        {{-- ERROS --}}
-        @if ($errors->any())
-            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-                <ul class="list-disc ml-5">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    <!-- SUCESSO -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        {{-- FORM --}}
-        <form method="POST"
-              action="{{ route('client.store') }}"
-              enctype="multipart/form-data"
-              class="space-y-4">
+    <!-- ERROS -->
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            @csrf
+    <!-- FORM -->
+    <form method="POST"
+          action="{{ route('client.store') }}"
+          enctype="multipart/form-data">
 
+        @csrf
+
+        <div class="mb-3">
             <input type="text"
                    name="name"
                    value="{{ old('name') }}"
+                   class="form-control"
                    placeholder="Nome completo"
-                   required
-                   class="w-full border p-2 rounded">
+                   required>
+        </div>
 
+        <div class="mb-3">
             <input type="email"
                    name="email"
                    value="{{ old('email') }}"
+                   class="form-control"
                    placeholder="Email"
-                   required
-                   class="w-full border p-2 rounded">
+                   required>
+        </div>
 
+        <div class="mb-3">
             <input type="password"
                    name="password"
+                   class="form-control"
                    placeholder="Senha"
-                   required
-                   class="w-full border p-2 rounded">
+                   required>
+        </div>
 
+        <div class="mb-3">
             <input type="password"
                    name="password_confirmation"
+                   class="form-control"
                    placeholder="Confirmar senha"
-                   required
-                   class="w-full border p-2 rounded">
+                   required>
+        </div>
 
+        <div class="mb-3">
             <input type="file"
                    name="image"
-                   class="w-full">
+                   class="form-control">
+        </div>
 
-            <button type="submit"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                Criar Cliente
-            </button>
+        <button type="submit"
+                class="btn btn-primary w-100">
+            Criar Cliente
+        </button>
 
-        </form>
+    </form>
 
-    </div>
+</div>
 
-</x-app-layout>
+@endsection

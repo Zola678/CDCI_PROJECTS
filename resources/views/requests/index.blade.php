@@ -1,53 +1,49 @@
-<x-app-layout>
+@extends('layouts.app')
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Meus Pedidos de Serviço
-        </h2>
-    </x-slot>
+@section('content')
 
-    <div class="py-12 bg-gray-100 min-h-screen">
+<div class="container py-4">
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h1 class="fw-bold">Meus Pedidos</h1>
+        <p class="text-muted">Aqui estão todos os serviços que você solicitou</p>
+    </div>
 
-            {{-- TÍTULO --}}
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-800">
-                    Meus Pedidos
-                </h1>
-                <p class="text-gray-600">
-                    Aqui estão todos os serviços que você solicitou
-                </p>
-            </div>
+    <!-- GRID -->
+    <div class="row g-4">
 
-            {{-- LISTA DE PEDIDOS --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @forelse($requests as $request)
 
-                @forelse($requests as $request)
+            <div class="col-md-4">
 
-                    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <div class="card shadow-sm h-100">
 
-                        <h3 class="text-lg font-bold text-gray-900">
+                    <div class="card-body">
+
+                        <h5 class="card-title fw-bold">
                             {{ $request->service->name ?? 'Serviço removido' }}
-                        </h3>
+                        </h5>
 
-                        <p class="text-gray-600 mt-2">
+                        <p class="card-text text-muted">
                             {{ $request->service->description ?? 'Sem descrição' }}
                         </p>
 
-                        {{-- STATUS (se tiveres campo status) --}}
-                        <div class="mt-4">
+                        <!-- STATUS -->
+                        <div class="mt-3">
 
                             @if(isset($request->status))
-                                <span class="px-3 py-1 text-sm rounded-full
-                                    @if($request->status == 'pendente') bg-yellow-200 text-yellow-800 @endif
-                                    @if($request->status == 'em andamento') bg-blue-200 text-blue-800 @endif
-                                    @if($request->status == 'concluido') bg-green-200 text-green-800 @endif
+
+                                <span class="badge
+                                    @if($request->status == 'pendente') bg-warning text-dark @endif
+                                    @if($request->status == 'em andamento') bg-primary @endif
+                                    @if($request->status == 'concluido') bg-success @endif
                                 ">
                                     {{ ucfirst($request->status) }}
                                 </span>
+
                             @else
-                                <span class="text-gray-500 text-sm">
+                                <span class="text-muted small">
                                     Pendente
                                 </span>
                             @endif
@@ -56,17 +52,20 @@
 
                     </div>
 
-                @empty
-
-                    <div class="col-span-3 text-center text-gray-500">
-                        Você ainda não fez nenhum pedido de serviço.
-                    </div>
-
-                @endforelse
+                </div>
 
             </div>
 
-        </div>
+        @empty
+
+            <div class="col-12 text-center text-muted">
+                Você ainda não fez nenhum pedido de serviço.
+            </div>
+
+        @endforelse
+
     </div>
 
-</x-app-layout>
+</div>
+
+@endsection

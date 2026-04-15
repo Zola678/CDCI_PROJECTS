@@ -1,52 +1,57 @@
-<x-app-layout>
+@extends('layouts.app')
 
-    <div class="max-w-6xl mx-auto p-6">
+@section('content')
 
-        {{-- HEADER --}}
-        <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">
-                Painel Admin
-            </h1>
+<div class="container py-4">
 
-            <p class="text-gray-600">
-                Gestão de clientes e pedidos da Open Box Corporation
-            </p>
-        </div>
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h1 class="fw-bold">Painel Admin</h1>
+        <p class="text-muted">
+            Gestão de clientes e pedidos da Open Box Corporation
+        </p>
+    </div>
 
-        {{-- GRID --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- GRID -->
+    <div class="row g-4">
 
-            @forelse($users as $user)
+        @forelse($users as $user)
 
-                <div class="bg-white shadow rounded-lg p-4">
+            <div class="col-md-4">
 
-                    {{-- AVATAR --}}
-                    <div class="flex justify-center mb-4">
+                <div class="card shadow-sm h-100">
 
-                        @if($user->image)
-                            <img src="{{ asset('storage/' . $user->image) }}"
-                                 class="w-16 h-16 rounded-full object-cover"
-                                 alt="avatar">
-                        @else
-                            <div class="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-lg font-bold">
-                                {{ strtoupper(substr($user->name, 0, 1)) }}
-                            </div>
-                        @endif
+                    <div class="card-body text-center">
 
-                    </div>
+                        <!-- AVATAR -->
+                        <div class="mb-3">
 
-                    {{-- INFO --}}
-                    <div class="text-center space-y-1">
+                            @if($user->image)
+                                <img src="{{ asset('storage/' . $user->image) }}"
+                                     class="rounded-circle"
+                                     width="70"
+                                     height="70"
+                                     style="object-fit: cover;"
+                                     alt="avatar">
+                            @else
+                                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto"
+                                     style="width:70px;height:70px;font-size:22px;">
+                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                </div>
+                            @endif
 
-                        <p class="font-semibold text-gray-800">
+                        </div>
+
+                        <!-- INFO -->
+                        <h5 class="fw-bold mb-1">
                             {{ $user->name }}
-                        </p>
+                        </h5>
 
-                        <p class="text-sm text-gray-500">
+                        <p class="text-muted mb-1">
                             {{ $user->email }}
                         </p>
 
-                        <p class="text-sm text-gray-700 mt-2">
+                        <p class="mt-3">
                             <strong>Pedidos:</strong>
                             {{ $user->request_services_count ?? 0 }}
                         </p>
@@ -55,16 +60,18 @@
 
                 </div>
 
-            @empty
+            </div>
 
-                <div class="col-span-3 text-center text-gray-500">
-                    Nenhum cliente encontrado.
-                </div>
+        @empty
 
-            @endforelse
+            <div class="col-12 text-center text-muted">
+                Nenhum cliente encontrado.
+            </div>
 
-        </div>
+        @endforelse
 
     </div>
 
-</x-app-layout>
+</div>
+
+@endsection
