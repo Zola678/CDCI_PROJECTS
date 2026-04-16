@@ -6,28 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('image')->nullable();
-        $table->string('token')->nullable();
-        $table->boolean('is_admin')->default(false);
-        $table->softDeletes();
-    });
+        Schema::table('users', function (Blueprint $table) {
 
+            $table->string('image')->nullable();
+            $table->string('token')->nullable();
+            $table->boolean('is_admin')->default(false);
+
+            // soft deletes
+            $table->softDeletes();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+
+            // REMOVER COLUNAS (IMPORTANTE PARA ROLLBACK)
+            $table->dropColumn([
+                'image',
+                'token',
+                'is_admin'
+            ]);
+
+            // remover soft deletes
+            $table->dropSoftDeletes();
         });
     }
 };

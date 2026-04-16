@@ -12,7 +12,7 @@
         Agência de Marketing • Design Gráfico • Programação • Edição de Vídeo
     </p>
 
-    <a href="/loogin" class="btn btn-primary btn-lg me-3">
+    <a href="/login" class="btn btn-primary btn-lg me-3">
     Login
 </a>
 

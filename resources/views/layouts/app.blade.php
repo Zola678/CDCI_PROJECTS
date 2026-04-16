@@ -19,7 +19,7 @@
 
             <div class="ms-auto">
                @guest
-                    <a href="/loogin" class="btn btn-outline-light me-2">Login</a>
+                    <a href="/login" class="btn btn-outline-light me-2">Login</a>
                     <a href="/register-client" class="btn btn-primary">Registrar</a>
                 @endguest
 

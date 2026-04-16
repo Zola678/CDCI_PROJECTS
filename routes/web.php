@@ -73,3 +73,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin');
 
 });
+
+require __DIR__.'/auth.php';
