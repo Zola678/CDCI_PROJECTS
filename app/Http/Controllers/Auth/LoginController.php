@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
-class LooginController extends Controller
+class LoginController extends Controller
 {
     /**
      * Mostrar página de login customizada
      */
     public function create(): View
     {
-        return view('auth.loogin');
+        return view('auth.login');
     }
 
     /**
@@ -57,6 +57,6 @@ class LooginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/loogin');
+        return redirect('/login');
     }
 }

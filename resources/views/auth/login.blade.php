@@ -28,7 +28,7 @@
     @endif
 
     <!-- FORM -->
-    <form method="POST" action="{{ route('loogin.store') }}">
+    <form method="POST" action="{{ route('login') }}">
 
         @csrf
 
