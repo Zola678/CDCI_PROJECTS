@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Scroll suave global */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Evita navbar cobrir secções ao navegar por âncoras */
+html {
+    scroll-padding-top: 80px;
+}
